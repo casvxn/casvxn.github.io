@@ -214,6 +214,7 @@
       .reveal { opacity:1; transform:none; }
     }
   </style>
+  <noscript><style>.reveal { opacity:1 !important; transform:none !important; }</style></noscript>
 </head>
 <body>
   <div class="aurora"><i></i><i></i><i></i></div>
@@ -369,6 +370,12 @@
 
     /* scroll reveal */
     const reveals = document.querySelectorAll('.reveal');
+    const revealNear = () => {
+      const limit = innerHeight * .94;
+      reveals.forEach(el => {
+        if (!el.classList.contains('in') && el.getBoundingClientRect().top < limit) el.classList.add('in');
+      });
+    };
     if (reduce || !('IntersectionObserver' in window)) {
       reveals.forEach(el => el.classList.add('in'));
     } else {
@@ -378,6 +385,9 @@
         });
       }, { threshold:.12, rootMargin:'0px 0px -8% 0px' });
       reveals.forEach(el => io.observe(el));
+      addEventListener('scroll', revealNear, { passive:true });
+      addEventListener('resize', revealNear);
+      revealNear();
     }
 
     /* scroll progress */
