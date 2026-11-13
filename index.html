@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <title>casvxn — personal space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --red:#f12b42; --red2:#8d1024; --glow:55%; --white:#f4f1f2; --muted:#898387; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; min-height:100vh; color:var(--white);
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(150,13,37,.18) 0%, transparent 48%),
+        radial-gradient(circle at 8% 8%, rgba(241,43,66,.08), transparent 25%),
+        #080808;
+      font-family:"Google Sans",Arial,sans-serif; overflow-x:hidden;
+    }
+    body::before {
+      content:""; position:fixed; inset:0; pointer-events:none; opacity:.13;
+      background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+      background-size:44px 44px; mask-image:linear-gradient(to bottom,black,transparent 85%);
+    }
+    .glow { position:fixed; width:420px; height:420px; border-radius:50%; background:rgba(241,43,66,.13); filter:blur(110px); pointer-events:none; z-index:-1; opacity:calc(var(--glow) / 100); top:25%; left:calc(50% - 210px); transition:opacity .2s; }
+    .topbar { width:min(960px,calc(100% - 40px)); margin:0 auto; padding:28px 0; display:flex; align-items:center; justify-content:space-between; }
+    .brand { font-size:14px; font-weight:800; letter-spacing:.18em; color:#fff; }
+    .brand span { color:var(--red); }
+    .lang {
+      border:1px solid #302327; background:rgba(20,15,17,.8); color:#ddd; border-radius:999px;
+      padding:9px 13px; font:600 11px "Google Sans",sans-serif; letter-spacing:.08em; cursor:pointer; transition:.2s;
+    }
+    .lang:hover { border-color:var(--red); color:#fff; box-shadow:0 0 20px #f12b4222; }
+    main { width:min(760px,calc(100% - 36px)); margin:34px auto 70px; position:relative; }
+    .eyebrow { display:none; }
+    h1 { margin:17px 0 4px; font-size:clamp(58px,12vw,104px); line-height:.98; letter-spacing:-.075em; font-weight:800; }
+    h1 .dot { color:var(--red); }
+    .subtitle { display:none; }
+    .status { display:inline-flex; align-items:center; gap:9px; padding:8px 12px; border:1px solid #282326; background:#100e0f; border-radius:999px; color:#c8c1c4; font-size:11px; margin-top:22px; }
+    .pulse { width:7px; height:7px; background:#f12b42; border-radius:50%; box-shadow:0 0 12px #f12b42; animation:pulse 1.8s infinite; }
+    @keyframes pulse { 50% { opacity:.35; box-shadow:0 0 3px #f12b42; } }
+    .panel { margin-top:34px; padding:25px; border:1px solid #302126; border-radius:20px; background:linear-gradient(145deg,rgba(24,17,19,.94),rgba(12,11,12,.94)); box-shadow:0 22px 80px #0008, inset 0 1px #ffffff08; }
+    .panel-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:22px; }
+    .section-title { color:#fff; font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+    .section-no { color:#6d6267; font-size:10px; letter-spacing:.14em; }
+    .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .info { min-height:104px; padding:17px; border:1px solid #292326; border-radius:13px; background:#0d0c0d; transition:transform .2s,border-color .2s; }
+    .info:hover { transform:translateY(-3px); border-color:#71303c; }
+    .label { color:#82787d; font-size:10px; letter-spacing:.15em; text-transform:uppercase; margin-bottom:11px; }
+    .value { font-size:15px; font-weight:600; color:#f4eff1; }
+    .value small { display:block; color:#92888d; font-size:11px; font-weight:400; margin-top:5px; }
+    .games { display:flex; flex-wrap:wrap; gap:8px; }
+    .tag { padding:8px 11px; border-radius:8px; border:1px solid #3a2229; background:#171013; color:#e8dfe2; font-size:11px; }
+    .tag b { color:var(--red); font-weight:700; }
+    .interests { display:flex; flex-wrap:wrap; gap:8px; }
+    .interest { color:#d8cfd3; background:#171315; border:1px solid #30272b; border-radius:8px; padding:8px 11px; font-size:11px; }
+    .links { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .social {
+      text-decoration:none; display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border:1px solid #3b242b; background:linear-gradient(120deg,#1b1014,#100e0f); padding:15px 16px; border-radius:12px;
+      color:#fff; transition:.2s;
+    }
+    .social:hover { transform:translateY(-3px); border-color:var(--red); box-shadow:0 10px 30px #f12b421c; }
+    .social-left { display:flex; align-items:center; gap:11px; }
+    .social-icon { width:34px; height:34px; display:grid; place-items:center; border-radius:9px; background:#2a1119; color:var(--red); font-weight:800; font-size:13px; }
+    .social-name { font-size:12px; font-weight:700; }
+    .social-handle { color:#92878c; font-size:10px; margin-top:3px; }
+    .arrow { color:#8e777e; font-size:17px; }
+    .slider-wrap { margin-top:25px; padding:17px 18px; border:1px solid #292326; border-radius:12px; background:#0d0c0d; }
+    .extra { margin-top:12px; padding:18px; border:1px solid #292326; border-radius:13px; background:#0d0c0d; }
+    .extra-text { color:#e6dfe2; font-size:14px; line-height:1.7; }
+    .extra-text em { color:var(--red); font-style:normal; font-weight:600; }
+    .slider-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:13px; }
+    .slider-top label { color:#b9afb4; font-size:11px; }
+    #glowValue { color:var(--red); font-size:11px; font-weight:700; font-variant-numeric:tabular-nums; }
+    input[type=range] { width:100%; accent-color:var(--red); cursor:pointer; height:4px; }
+    .slider-hint { color:#746b70; font-size:10px; margin-top:8px; }
+    footer { text-align:center; color:#62595e; font-size:10px; letter-spacing:.13em; margin-top:35px; }
+    footer span { color:var(--red); }
+    [data-en] { display:none; }
+    body.english [data-ru] { display:none; }
+    body.english [data-en] { display:initial; }
+    @media(max-width:560px) {
+      .topbar { padding:20px 0; } main { margin-top:38px; }
+      .panel { padding:18px; } .info-grid { grid-template-columns:1fr; }
+      .links { grid-template-columns:1fr; } .info { min-height:auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow" id="glow"></div>
+  <header class="topbar">
+    <div class="brand">C<span>/</span>V</div>
+    <button class="lang" id="langBtn" type="button" aria-label="Switch language">EN / RU</button>
+  </header>
+
+  <main>
+    <h1>casvxn<span class="dot">.</span></h1>
+    <div class="status"><span class="pulse"></span><span data-ru>в сети 24/7</span><span data-en>online 24/7</span></div>
+
+    <section class="panel">
+      <div class="panel-head"><div class="section-title"><span data-ru>обо мне</span><span data-en>about me</span></div><div class="section-no">01 / PROFILE</div></div>
+      <div class="info-grid">
+        <div class="info">
+          <div class="label"><span data-ru>возраст</span><span data-en>age</span></div>
+          <div class="value">16 <small><span data-ru>лет · у.о.</span><span data-en>years old</span></small></div>
+        </div>
+        <div class="info">
+          <div class="label"><span data-ru>никнейм</span><span data-en>username</span></div>
+          <div class="value">casvxn <small><span data-ru>запомни это имя</span><span data-en>remember the name</span></small></div>
+        </div>
+        <div class="info">
+          <div class="label"><span data-ru>играю</span><span data-en>playing</span></div>
+          <div class="games">
+            <span class="tag"><b>Minecraft</b> · BedWars 1.8.9</span>
+            <span class="tag"><b>Counter-Strike 2</b></span>
+          </div>
+        </div>
+        <div class="info">
+          <div class="label"><span data-ru>шарю за</span><span data-en>into</span></div>
+          <div class="interests"><span class="interest">Anime</span><span class="interest">Twitch</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div class="section-title"><span data-ru>найти меня</span><span data-en>find me</span></div><div class="section-no">02 / SOCIALS</div></div>
+      <div class="links">
+        <a class="social" href="https://t.me/casvxn_off" target="_blank" rel="noopener noreferrer">
+          <span class="social-left"><span class="social-icon">TG</span><span><span class="social-name">Telegram</span><span class="social-handle">@casvxn_off</span></span></span><span class="arrow">↗</span>
+        </a>
+        <a class="social" href="https://www.tiktok.com/@casvxn_off" target="_blank" rel="noopener noreferrer">
+          <span class="social-left"><span class="social-icon">TT</span><span><span class="social-name">TikTok</span><span class="social-handle">@casvxn_off</span></span></span><span class="arrow">↗</span>
+        </a>
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-top">
+          <label for="glowRange"><span data-ru>интенсивность красного свечения</span><span data-en>red glow intensity</span></label>
+          <output id="glowValue">55%</output>
+        </div>
+        <input id="glowRange" type="range" min="0" max="100" value="55">
+        <div class="slider-hint"><span data-ru>двигай ползунок и настрой атмосферу</span><span data-en>Move the slider and set the mood</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><div class="section-title"><span data-ru>доп. информация</span><span data-en>extra info</span></div><div class="section-no">03 / EXTRA</div></div>
+      <div class="extra">
+        <div class="extra-text">
+          <span data-ru>Занимаюсь всякой хуйнёй, гуляю и иногда занимаюсь <em>вайбкодингом</em>.</span>
+          <span data-en>I do random stuff, go out, and sometimes get into <em>vibe coding</em>.</span>
+        </div>
+      </div>
+    </section>
+    <footer>MADE BY <span>CASVXN</span> · 2026</footer>
+  </main>
+
+  <script>
+    const langBtn = document.getElementById('langBtn');
+    langBtn.addEventListener('click', () => {
+      const english = document.body.classList.toggle('english');
+      document.documentElement.lang = english ? 'en' : 'ru';
+      langBtn.textContent = english ? 'RU / EN' : 'EN / RU';
+    });
+    const range = document.getElementById('glowRange');
+    const output = document.getElementById('glowValue');
+    range.addEventListener('input', () => {
+      output.value = range.value + '%';
+      output.textContent = range.value + '%';
+      document.documentElement.style.setProperty('--glow', range.value + '%');
+    });
+  </script>
+</body>
+</html>
